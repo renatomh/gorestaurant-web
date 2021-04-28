@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { FiEdit3, FiTrash } from 'react-icons/fi';
+import api from '../../services/api';
 
 import { Container } from './styles';
 
@@ -20,18 +21,36 @@ interface IProps {
 }
 
 const Food: React.FC<IProps> = ({
+  // Recebemos os dados do prato a ser exibido/editado
   food,
+  // Função para remover o prato (chamada no Dashboard)
   handleDelete,
+  // Função a ser chamada no Dashboard
   handleEditFood,
 }: IProps) => {
   const [isAvailable, setIsAvailable] = useState(food.available);
 
+  // Função para alternar a disponibilidade do prato
   async function toggleAvailable(): Promise<void> {
-    // TODO UPDATE STATUS (available)
+    // Podemos fazer a chamada diretamente aqui, sem ter de utilizar uma função do 'Dashboard'
+    try {
+      await api.put(`/foods/${food.id}`, {
+        // Passando os dados do prato
+        ...food,
+        // Invertendo o status atual de disponibilidade
+        available: !isAvailable,
+      });
+      // Atualizando o status na página
+      setIsAvailable(!isAvailable);
+    } catch (err) {
+      // Caso ocorra algum erro, apresentamos no console
+      console.log(err);
+    }
   }
 
+  // Função para atribuir o ID e informações do prato e abrir o modal de edição
   function setEditingFood(): void {
-    // TODO - SET THE ID OF THE CURRENT ITEM TO THE EDITING FOOD AND OPEN MODAL
+    handleEditFood(food);
   }
 
   return (

@@ -27,6 +27,7 @@ const Modal: React.FC<IModalProps> = ({ children, isOpen, setIsOpen }) => {
   return (
     <ReactModal
       shouldCloseOnOverlayClick={!false}
+      // Permitindo fechar o modal ao clicar fora dele
       onRequestClose={setIsOpen}
       isOpen={modalStatus}
       ariaHideApp={false}
@@ -44,6 +45,7 @@ const Modal: React.FC<IModalProps> = ({ children, isOpen, setIsOpen }) => {
           width: '736px',
           border: 'none',
         },
+        // Definindo a estilização do resto da tela ao abrir o modal
         overlay: {
           backgroundColor: '#121214e6',
         },

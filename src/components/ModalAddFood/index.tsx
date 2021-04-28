@@ -28,16 +28,23 @@ interface IModalProps {
   handleAddFood: (food: Omit<IFoodPlate, 'id' | 'available'>) => void;
 }
 
+// Implementaçao do modal para a inserção de pratos
 const ModalAddFood: React.FC<IModalProps> = ({
   isOpen,
+  // Função para fechar o modal a partir do mesmo
   setIsOpen,
+  // Função a ser chamada no Dashboard
   handleAddFood,
 }) => {
   const formRef = useRef<FormHandles>(null);
 
+  // Função a ser chamada quando clicar no botão de envio de formulário do modal
   const handleSubmit = useCallback(
     async (data: ICreateFoodData) => {
-      // TODO ADD A NEW FOOD AND CLOSE THE MODAL
+      // Chamando a função que foi passada pela página que instanciou o modal/componente
+      handleAddFood(data);
+      // Fechamos ainda o modal
+      setIsOpen();
     },
     [handleAddFood, setIsOpen],
   );

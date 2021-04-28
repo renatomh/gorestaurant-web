@@ -29,17 +29,25 @@ interface IEditFoodData {
   description: string;
 }
 
+// Implementaçao do modal para a edição de pratos
 const ModalEditFood: React.FC<IModalProps> = ({
   isOpen,
+  // Função para fechar o modal a partir do mesmo
   setIsOpen,
+  // Dados do prato a ser editado
   editingFood,
+  // Função a ser chamada no Dashboard
   handleUpdateFood,
 }) => {
   const formRef = useRef<FormHandles>(null);
 
+  // Função a ser chamada quando clicar no botão de envio de formulário do modal
   const handleSubmit = useCallback(
     async (data: IEditFoodData) => {
-      // EDIT A FOOD PLATE AND CLOSE THE MODAL
+      // Chamando a função que foi passada pela página que instanciou o modal/componente
+      handleUpdateFood(data);
+      // Fechamos ainda o modal
+      setIsOpen();
     },
     [handleUpdateFood, setIsOpen],
   );
